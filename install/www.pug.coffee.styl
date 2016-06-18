@@ -1,0 +1,66 @@
+#!/bin/sh
+
+TARBALL_URL="https://github.com/kuahitz/boilerplates/dist/www.pug.coffee.styl.tar.gz"
+
+has() {
+  type "$1" >/dev/null 2>&1
+  return $?
+}
+
+e_newline() {
+  printf "\n"
+}
+
+e_header() {
+  printf "\033[37;1m%s\033[m\n" "$*"
+}
+
+e_done() {
+  printf "\033[37;1m%s\033[m...\033[32mOK\033[m\n" "✔ $*"
+}
+
+e_error() {
+  printf "\033[31m%s\033[m\n" "✖ $*" 1>&2
+}
+
+download() {
+  e_newline && e_header "Downloading www.pug.coffee.styl..."
+  if has "curl" || has "wget"; then
+    if has "curl"; then
+      curl -L "$TARBALL_URL"
+    elif has "wget"; then
+      wget -O - "$TARBALL_URL"
+    fi | tar xvz
+  else
+    e_error "curl or wget required"
+    exit 1
+  fi
+  e_done "Download"
+}
+
+logo="
+                                                                        __  __                    _         _
+                                                                       / _|/ _|                  | |       | |
+ __      ____      ____      __      _ __  _   _  __ _        ___ ___ | |_| |_ ___  ___       ___| |_ _   _| |
+ \ \ /\ / /\ \ /\ / /\ \ /\ / /     | '_ \| | | |/ _\` |      / __/ _ \|  _|  _/ _ \/ _ \     / __| __| | | | |
+  \ V  V /  \ V  V /  \ V  V /   _  | |_) | |_| | (_| |  _  | (_| (_) | | | ||  __/  __/  _  \__ \ |_| |_| | |
+   \_/\_/    \_/\_/    \_/\_/   (_) | .__/ \__,_|\__, | (_)  \___\___/|_| |_| \___|\___| (_) |___/\__|\__, |_|
+                                    | |           __/ |                                                __/ |
+                                    |_|          |___/                                                |___/
+"
+
+if ! echo "$-" | grep -q "i"; then
+  if [ "$0" = "${BASH_SOURCE:-}" ]; then
+    # -> bash a.sh
+    exit 1
+  else
+    # -> cat a.sh | bash
+    # -> bash -c "$(cat a.sh)"
+    if [ -n "${BASH_EXECUTION_STRING:-}" ] || [ -p /dev/stdin ]; then
+      echo "$logo"
+      download
+      e_newline && e_header "Complete!"
+    fi
+  fi
+fi
+
