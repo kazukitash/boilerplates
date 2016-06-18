@@ -1,0 +1,29 @@
+{
+  "name": "www.pug.cofee.styl",
+  "version": "0.1.0",
+  "description": "Web site boilerplate using pug, coffee and stylus",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kuahitz",
+  "license": "MIT",
+  "devDependencies": {
+    "normalize.css": "*",
+    "require-dir": "*",
+    "coffee-script": "*",
+    "lodash": "*",
+    "jquery": "*",
+    "stylus": "*",
+    "gulp-plumber": "*",
+    "gulp-coffee": "*",
+    "gulp-watch": "*",
+    "gulp": "*",
+    "gulp-notify": "*",
+    "gulp-stylus": "*",
+    "gulp-pug": "*",
+    "pug": "*",
+    "webserver": "*",
+    "gulp-webserver": "*"
+  }
+}
